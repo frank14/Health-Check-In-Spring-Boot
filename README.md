@@ -15,8 +15,6 @@ Para configurar Spring Boot Admin en un proyecto, primero debe realizar el proce
 
 Para inicializar el proyecto se recomienda utilizar [Spring Initializr](https://start.spring.io/) y configurar las siguientes dependencias para el proyecto en cuestion.
 
-#### Dependencias 
-
 ![Depenencias](./screenshots/1.png)
 
 ## Acerca de Spring Boot Admin
