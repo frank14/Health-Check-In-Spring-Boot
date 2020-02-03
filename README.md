@@ -4,8 +4,8 @@ Cómo monitorizar microservicios con Spring Boot Admin
 
 ## Documentaciones
 
-[Spring Boot Admin Reference Guide](https://codecentric.github.io/spring-boot-admin/2.2.1/)
-[Cómo monitorizar microservicios con Spring-Boot-Admin](https://www.paradigmadigital.com/dev/monitorizar-microservicios-spring-boot-admin/)
+- [Spring Boot Admin Reference Guide](https://codecentric.github.io/spring-boot-admin/2.2.1/)
+- [Cómo monitorizar microservicios con Spring-Boot-Admin](https://www.paradigmadigital.com/dev/monitorizar-microservicios-spring-boot-admin/)
 
 ## Configurar Spring Boot Admin
 
