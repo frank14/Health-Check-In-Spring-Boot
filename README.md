@@ -148,5 +148,47 @@ logging:
     file: '%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx'
 ```
 
+Para finalizar, se debe proceder a iniciar el proyecto y acceder por medio del id o el wallboard de nuestra instancia creada por el proyecto.
+
 ## Acerca de Spring Boot Admin
 
+### Spring Boot Actuator
+
+Según su propia definición en la documentación de Spring se trata de *“una serie de características adicionales que te ayudan a monitorizar y gestionar tu aplicación cuando es desplegada en producción”*. En esencia spring-boot-actuator nos proporciona por defecto una serie de endpoints en los que poder consultar información relativa a nuestra aplicación.
+
+### Endpont Shutdown True
+
+el endpoint /shutdown que nos permite apagar nuestra aplicación por defecto está deshabilitado, si quisiéramos por ejemplo activarlo, securizarlo y cambiarlo a la URL /apagar tendríamos que incluir las siguientes propiedades:
+
+```
+endpoints:
+    shutdown:
+        enabled: true
+```    
+
+### Endpoint de estado
+
+![Health](./screenshots/2.png)
+
+Spring Boot Actuator realiza el control del estado a través del endpoint health. A nivel de implementación Spring nos proporciona unos cuantos HealthIndicator por defecto que serán autoconfigurados según las dependencias de nuestro proyecto. Así tenemos HealthIndicators para dataSources, disco, colas… además de la posibilidad de implementar el nuestro propio y añadirlo a los demás.
+Otro de los efectos colaterales de incluir la dependencia de spring-security en nuestro proyecto es la información devuelta por el endpoint de estado. Incluso desecurizando el endpoint se evitará devolver información sensible sobre los elementos que componen el estado de nuestra aplicación.
+
+### Environment
+
+![Enviroment](./screenshots/3.png)
+
+En la pantalla de Environment podemos ver el perfil con el que se ejecuta la aplicación, las variables de sistema y propiedades, así como modificarlas.
+
+### Logging
+
+![Logging](./screenshots/4.png)
+
+En esta pantalla podemos ver el nivel de log de las diferentes clases y librerías que componen nuestra aplicación, así como cambiar su nivel de log en caliente. Para ello es necesario añadir la dependencia de jolokia:
+
+`compile group: 'org.jolokia', name: 'jolokia-core', version: '1.6.2'`
+
+También hay que añadir la siguiente línea en nuestro fichero de configuración de logback:
+
+`**`
+
+**IMPORTANTE:** esta funcionalidad solo es compatible actualmente con logback, no funcionará con otras librerías de log.
