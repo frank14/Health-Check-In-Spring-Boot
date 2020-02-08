@@ -28,6 +28,7 @@ public class ApplicationController {
 	    .paths(Predicates.not(PathSelectors.regex("/error.*")))
 	    .paths(Predicates.not(PathSelectors.regex("/admin.*")))
 	    .paths(Predicates.not(PathSelectors.regex("/actuator.*")))
+	    .paths(Predicates.not(PathSelectors.regex("/")))
 	    .build();
 	}
 	
