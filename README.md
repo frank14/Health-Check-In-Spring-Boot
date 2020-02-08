@@ -62,6 +62,8 @@ Se debe añadir las siguientes instrucciones en nuestro archivo YML para configu
 
 **Configurando Base de datos**
 
+Conexión a la base de datos local.
+
 ```
 # DB CONFIG
 spring:
@@ -78,8 +80,9 @@ spring:
 
 **Configurando Spring Boot Admin**
 
+Configuracion de las instancias de nuestro respectivo proyecto.
+
 ```
-# DB CONFIG
 # SPRING BOOT ADMIN CONFIG    
   boot:
     admin:
@@ -92,11 +95,18 @@ spring:
           instances:
             test:
               - uri: http://localhost:8080
+#              - uri: http://localhost:8082
                 metadata:
                   management.context-path: /actuator
+#            testB:
+#              - uri: http://localhost:8081
+#                metadata:
+#                  management.context-path: /actuator
 ```
 
 **Exponiendo Endpoints**
+
+Estos serán los modulos que mostrará nuestro actuator, y al mismo tiempo, tambien nos permitirá visualizarlos en nuestro menú de Spring Boot Admin.
 
 ```
 # HEALTH ENDPOINT
@@ -115,6 +125,8 @@ management:
 ```
 
 **Configurando la Información a mostrar en la pantalla**
+
+Esta información se toma directamente de las variables de entorno las cuales se pueden consultar facilmente en la pestaña enviroment que se crea a partir de su llamada en el YML.
 
 ```
 info:
@@ -138,7 +150,73 @@ info:
         dialect:${spring.jpa.properties.hibernate.dialect}
 ```
 
+**Configurando Puertos**
+
+En esta parte se configura el puerto por defecto de nuestra aplicación.
+
+```
+uri: http://localhost:8080
+
+server:
+  port: 8080
+```
+
+**Configurando Endpoint Home**
+
+Con esta configuración se podrá redireccionar desde la url que tenemos para impedir que el usuario se dirija al directorio raiz de nuestro proyecto.
+
+*En ApplicationController.*
+
+```
+package com.app.api.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.google.common.base.Predicates;
+
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+
+@Configuration
+@Controller
+public class ApplicationController {
+
+	@Bean
+	public Docket api() {
+	return new Docket(DocumentationType.SWAGGER_2)
+	    .select()
+	    .apis(RequestHandlerSelectors.any())
+	    .paths(PathSelectors.any())
+	    .paths(Predicates.not(PathSelectors.regex("/error.*")))
+	    .paths(Predicates.not(PathSelectors.regex("/admin.*")))
+	    .paths(Predicates.not(PathSelectors.regex("/actuator.*")))
+	    .paths(Predicates.not(PathSelectors.regex("/")))
+	    .build();
+	}
+	
+	@Value("${uri}")
+	private String hostUrl;
+	
+	@GetMapping("/")
+	public String redirectToAdmin(HttpServletRequest request) {
+		String homeUrl = hostUrl;
+		return "redirect:".concat(homeUrl).concat("/admin").concat("/wallboard");
+	}
+
+}
+```
+
 **Configurando Logfile**
+
+Con el siguiente codigo, se le permite a Spring Boot Admin generar archivos log que posteriormente se podrán exportar para llevar un registro.
 
 ```
 # CREATE LOGFILE
