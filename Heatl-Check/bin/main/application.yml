@@ -24,6 +24,10 @@ spring:
               - uri: http://localhost:8080
                 metadata:
                   management.context-path: /actuator
+#            testB:
+#              - uri: http://localhost:8081
+#                metadata:
+#                  management.context-path: /actuator
 
 # HEALTH ENDPOINT
 management:
@@ -59,6 +63,11 @@ info:
     properties:
       hibernate:
         dialect:${spring.jpa.properties.hibernate.dialect}
+
+uri: http://localhost:8080
+
+server:
+  port: 8080
 
 # CREATE LOGFILE
 logging:
