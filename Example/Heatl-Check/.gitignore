@@ -1,4 +1,9 @@
 HELP.md
+*.lock
+*.bin
+*.properties
+.project
+*.prefs
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
