@@ -1,6 +1,0 @@
-
-*.lock
-*.bin
-*.properties
-.project
-*.prefs
