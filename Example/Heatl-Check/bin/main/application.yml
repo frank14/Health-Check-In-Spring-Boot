@@ -22,13 +22,13 @@ spring:
           instances:
             test:
               - uri: http://localhost:8080
-#              - uri: http://localhost:8082
+              - uri: http://localhost:8082
                 metadata:
                   management.context-path: /actuator
-#            testB:
-#              - uri: http://localhost:8081
-#                metadata:
-#                  management.context-path: /actuator
+            testB:
+              - uri: http://localhost:8081
+                metadata:
+                  management.context-path: /actuator
 
 # HEALTH ENDPOINT
 management:
